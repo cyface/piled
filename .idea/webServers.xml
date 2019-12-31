@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="1dbf490b-64a9-478b-a4cf-235cb7a8a6be" name="raspberrypi.local" url="http://raspberrypi.local">
+        <fileTransfer host="raspberrypi.local" port="22" privateKey="C:\Users\cyfac\Documents\putty-private2" rootFolder="/home/pi" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
