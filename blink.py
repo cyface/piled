@@ -57,4 +57,4 @@ for color in rainbow:
 
 time.sleep(1)
 
-pixels.fill((0, 0, 0))
+pixels.deinit()
