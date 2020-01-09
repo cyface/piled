@@ -27,15 +27,18 @@ keypad = adafruit_matrixkeypad.Matrix_Keypad(rows, cols, keys)
 sound_dir = "/home/pi/piled/sounds/"
 selected_sound = 1
 sounds = {
+    0: "Groovy.mp3",
     1: "Groovy.mp3",
     2: "Boomstick.mp3",
     3: "GetOut.mp3",
-    4: "sounds/GoodGuys.mp3",
-    5: "sounds/HailToTheKing.mp3",
-    6: "sounds/ImWithIt.mp3",
-    7: "sounds/OneMillionDollars.mp3",
-    8: "sounds/ShopSmart.mp3",
-    9: "sounds/laser.wav",
+    4: "GoodGuys.mp3",
+    5: "HailToTheKing.mp3",
+    6: "ImWithIt.mp3",
+    7: "OneMillionDollars.mp3",
+    8: "ShopSmart.mp3",
+    9: "laser.wav",
+    '*': "Groovy.mp3",
+    '#': "Groovy.mp3",
 }
 
 mixer.init()
