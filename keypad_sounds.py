@@ -4,7 +4,7 @@ exec(open(activate_this).read(), {'__file__': activate_this})
 
 import adafruit_matrixkeypad
 import board
-from digitalio import DigitalInOut
+from digitalio import DigitalInOut, Direction
 from gpiozero import Button
 import neopixel_spi
 from pygame import mixer
@@ -18,6 +18,9 @@ pixels = neopixel_spi.NeoPixel_SPI(spi, NUM_PIXELS, brightness=0.05)
 
 # Big Red Button
 button = Button(24)
+button_light = DigitalInOut(board.D7)
+button_light.direction = Direction.OUTPUT
+button_light = False
 
 # 3x4 matrix keypad
 cols = [DigitalInOut(x) for x in (board.D4, board.D3, board.D2)]
@@ -64,6 +67,7 @@ def pixel_loop():
 
 try:
     pixel_loop()
+    button_light = True
     while True:
         keys = keypad.pressed_keys
         if keys:
