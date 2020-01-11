@@ -1,5 +1,6 @@
 rpi_ws281x
 adafruit-circuitpython-matrixkeypad
 adafruit-circuitpython-neopixel
+adafruit-circuitpython-neopixel-spi
 gpiozero
 pygame

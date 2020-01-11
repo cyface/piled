@@ -1,21 +1,16 @@
+import sys
+
 activate_this = '/home/pi/piled/.venv/bin/activate_this.py'
 exec(open(activate_this).read(), {'__file__': activate_this})
 
-import atexit
 import time
 import board
-import neopixel
+import neopixel_spi
 
-pixel_pin = board.D18
+NUM_PIXELS = 8
+spi = board.SPI()
 
-# The number of NeoPixels
-num_pixels = 8
-
-# # The order of the pixel colors - RGB or GRB. Some NeoPixels have red and green reversed!
-# # For RGBW NeoPixels, simply change the ORDER to RGBW or GRBW.
-# ORDER = neopixel.GRB
-
-pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.2, auto_write=False)
+pixels = neopixel_spi.NeoPixel_SPI(spi, NUM_PIXELS, brightness=0.2, auto_write=False)
 
 
 def wheel(pos):
@@ -42,18 +37,22 @@ def wheel(pos):
 
 def rainbow_cycle(wait):
     for j in range(255):
-        for i in range(num_pixels):
-            pixel_index = (i * 256 // num_pixels) + j
+        for i in range(NUM_PIXELS):
+            pixel_index = (i * 256 // NUM_PIXELS) + j
             pixels[i] = wheel(pixel_index & 255)
         pixels.show()
         time.sleep(wait)
 
 
 def all_off():
-    pixels.fill((0, 0, 0))
+    pixels.fill(0)
+    pixels.show()
 
-
-atexit.register(all_off)
 
 while True:
-    rainbow_cycle(0.001)
+    try:
+        rainbow_cycle(0.001)
+    except KeyboardInterrupt:
+        all_off()
+        print("Bye!")
+        sys.exit()

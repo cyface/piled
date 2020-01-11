@@ -5,17 +5,23 @@ exec(open(activate_this).read(), {'__file__': activate_this})
 import adafruit_matrixkeypad
 import board
 from digitalio import DigitalInOut
-import time
-from pygame import mixer
-from time import sleep
 from gpiozero import Button
+import neopixel_spi
+from pygame import mixer
+import sys
+import time
+
+# NeoPixel Strip
+NUM_PIXELS = 8
+spi = board.SPI()
+pixels = neopixel_spi.NeoPixel_SPI(spi, NUM_PIXELS, brightness=0.05)
 
 # Big Red Button
-button = Button(7)
+button = Button(24)
 
 # 3x4 matrix keypad
-cols = [DigitalInOut(x) for x in (board.D10, board.D9, board.D11)]
-rows = [DigitalInOut(x) for x in (board.D17, board.D2, board.D4, board.D3)]
+cols = [DigitalInOut(x) for x in (board.D4, board.D3, board.D2)]
+rows = [DigitalInOut(x) for x in (board.D23, board.D22, board.D27, board.D17)]
 keys = [
     (1, 2, 3),
     (4, 5, 6),
@@ -45,7 +51,19 @@ mixer.init()
 mixer.music.load(sound_dir + sounds[selected_sound])
 mixer.music.play(0)
 
+
+def pixel_loop():
+    for curr_pixel in range(0, 8):
+        pixels[curr_pixel] = (255, 0, 0)
+        time.sleep(.025)
+    for curr_pixel in range(7, -1, -1):
+        pixels[curr_pixel] = (0, 255, 0)
+        time.sleep(.025)
+    pixels.fill(0)
+
+
 try:
+    pixel_loop()
     while True:
         keys = keypad.pressed_keys
         if keys:
@@ -55,8 +73,9 @@ try:
             print("Red Button Pressed")
             mixer.music.load(sound_dir + sounds[selected_sound])
             mixer.music.play(0)
-            sleep(.25)  # wait and let the sound play
-
+            time.sleep(.25)  # wait and let the sound play
+            pixel_loop()
         time.sleep(0.1)
 except KeyboardInterrupt:
     print("Bye!")
+    sys.exit()

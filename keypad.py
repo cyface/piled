@@ -7,8 +7,8 @@ from digitalio import DigitalInOut
 import time
 
 # 3x4 matrix keypad
-cols = [DigitalInOut(x) for x in (board.D10, board.D9, board.D11)]
-rows = [DigitalInOut(x) for x in (board.D17, board.D2, board.D4, board.D3)]
+cols = [DigitalInOut(x) for x in (board.D4, board.D3, board.D2)]
+rows = [DigitalInOut(x) for x in (board.D23, board.D22, board.D27, board.D17)]
 
 keys = [
     (1, 2, 3),
